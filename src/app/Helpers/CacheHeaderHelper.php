@@ -120,6 +120,8 @@ class CacheHeaderHelper
      * 'hoge.fuga.poyo'から
      * ['hoge', 'hoge.fuga', 'hoge.fuga.poyo']
      * のように階層的に文字列を切り出して配列化する
+     * 
+     * Note: 下の階層を纏めて削除出来るようにするための細工だが、システムによっては不要かもしれません。
      *
      * @param string $input
      * @return array

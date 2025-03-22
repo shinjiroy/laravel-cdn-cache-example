@@ -10,5 +10,7 @@
     <body>
         <div>トップページです</div>
         <div><a href="{{ route('mypage.index') }}">マイページへ移動</a></div>
+        <div><a href="{{ route('search') }}">検索ページへ移動</a></div>
+        <div><a href="{{ route('content.show', ['id' => 1]) }}">コンテンツページへ移動</a></div>
     </body>
 </html>
