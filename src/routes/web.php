@@ -25,16 +25,16 @@ Route::withoutMiddleware([
         // ステータスコード別のレスポンス確認用
         if ($q === '404') {
             // 404を返す
-            return abort(404);
+            abort(404);
         } elseif ($q === '500') {
             // 500を返す
-            return abort(500);
+            abort(500);
         } elseif ($q === '302') {
             // 302を返す
             return redirect('/search?q=redirected');
         } elseif ($q === '400') {
             // 400を返す
-            return abort(400);
+            abort(400);
         }
 
         return view('search', compact('q', 'hoge'));
