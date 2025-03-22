@@ -4,11 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>welcome</title>
+        <title>mypage</title>
     </head>
 
     <body>
-        <div>トップページです</div>
-        <div><a href="{{ route('mypage.index') }}">マイページへ移動</a></div>
+        <div>マイページです</div>
+        <div>
+            @auth
+                ログイン済み
+            @else
+                未ログイン
+            @endauth
+        </div>
     </body>
 </html>
