@@ -22,15 +22,18 @@ Route::withoutMiddleware([
         $q = $request->input('q');
         $hoge = $request->input('hoge');
 
-        // ステータスコード別のレスポンス確認用
+        /**
+         * ステータスコード別のレスポンス確認用
+         * @see App\Helpers\CacheHeaderHelper::isCachableResponse()
+         */
         if ($q === '404') {
-            // 404を返す
+            // キャッシュされるだろう
             abort(404);
         } elseif ($q === '500') {
             // 500を返す
             abort(500);
         } elseif ($q === '302') {
-            // 302を返す
+            // 適当なリダイレクトレスポンスを返す
             return redirect('/search?q=redirected');
         } elseif ($q === '400') {
             // 400を返す
