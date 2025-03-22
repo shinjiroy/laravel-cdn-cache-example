@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 use ReflectionClass;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CacheHeaderHelperTest extends TestCase
 {
@@ -149,4 +150,19 @@ class CacheHeaderHelperTest extends TestCase
         $response = response()->json(['error' => 'Server error'], 500);
         $this->assertFalse(CacheHeaderHelper::isCachableResponse($request, $response));
     }
-} 
+
+    public function test_abort404のレスポンスがキャッシュ可能と判定される()
+    {
+        $request = Request::create('/api/products/123', 'GET');
+        $request->setRouteResolver(function () use ($request) {
+            return (new \Illuminate\Routing\Route('GET', '/api/products/{id}', []))
+                ->name('products.show')
+                ->bind($request);
+        });
+
+        // abort(404)のレスポンスをシミュレート
+        $response = response()->json(['error' => 'Not found'], 404);
+
+        $this->assertTrue(CacheHeaderHelper::isCachableResponse($request, $response));
+    }
+}

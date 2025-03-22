@@ -160,10 +160,12 @@ class CacheHeaderHelper
             return true;
         }
 
+        // リダイレクトはキャッシュして良い(要件次第)
         if ($response->isRedirection()) {
             return true;
         }
 
+        // 404はキャッシュして良い
         if ($response->isNotFound()) {
             return true;
         }
@@ -173,6 +175,10 @@ class CacheHeaderHelper
 
     /**
      * CacheTagに指定して良い文字列
+     * 
+     * Note:
+     * このメソッドでは簡単なチェックしかしていません。
+     * 何かしら攻撃の意図のあるリクエストは各URLの処理で正しくバリデーションされ、4XXエラーが返る想定です。
      *
      * @param mixed $tag
      * @return boolean
