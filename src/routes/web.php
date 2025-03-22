@@ -20,7 +20,7 @@ Route::withoutMiddleware([
 
     Route::get('/search', function (Request $request) {
         $q = $request->input('q');
-        $hoge = $request->input('hoge');
+        $hoge = $request->input('hoge'); // Cache-Tagには含まれない
 
         /**
          * ステータスコード別のレスポンス確認用
@@ -44,7 +44,7 @@ Route::withoutMiddleware([
     })->name('search');
 
     Route::get('/content/{id}', function (Request $request, $id) {
-        $hoge = $request->input('hoge');
+        $hoge = $request->input('hoge'); // Cache-Tagには含まれない
         return view('content', compact('id', 'hoge'));
     })->name('content.show');
 });
