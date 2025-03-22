@@ -1,0 +1,34 @@
+services:
+  app:
+    build:
+      context: ./docker/app
+      args:
+        - DEV_USER_UID=1000
+        - DEV_USER_GID=1000
+    tty: true
+    volumes:
+      - ./src:/var/www
+      - ./logs/php:/var/log/php
+      - ./docker/app/conf/zzz-docker.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf
+      - app-sock:/var/run/php/
+    working_dir: /var/www
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=null
+  web:
+    image: nginx:1.27-bookworm
+    volumes:
+      - ./src/public:/var/www/public
+      - ./docker/web/conf:/etc/nginx/conf.d/
+      - ./logs/web:/var/log/nginx
+      - app-sock:/var/run/php/
+    ports:
+      - 80:80
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+volumes:
+  app-sock:
