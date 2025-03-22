@@ -17,16 +17,21 @@ return [
     |
     | ルート別のキャッシュ設定
     |
+    | routeファイルのURIをキーとして設定します。
+    | 
+    | 設定可能なキーは以下の通りです。
+    | - cdn_max_age: CDNのmax-age（秒）
+    | - query_params: クエリパラメータのキー
     */
     'routes' => [
-        'index' => [ // パラメータ無し
-            'cdn_max_age' => 3600,
+        '/' => [ // ルートの場合は/のみであることに注意
+            'cdn_max_age' => 86400,
         ],
-        'content.search' => [
+        'search' => [
             'query_params' => ['q'],
             'cdn_max_age' => 7200,
         ],
-        'content.detail' => [ // パスパラメータにIDが含まれる想定
+        'content/{id}' => [ // パスパラメータにIDが含まれる想定
             'cdn_max_age' => 3600,
         ],
         // 他のルート設定をここに追加

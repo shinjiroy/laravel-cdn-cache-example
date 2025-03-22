@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -28,7 +28,7 @@ class CacheHeaderHelper
 
         // ルート名をタグに追加
         $route_name = $request->route()->getName();
-        $tags = $route_name ? self::generateDotSeparatedArray($route_name) : [];
+        $tags = $route_name ? self::generateTagsByRouteName($route_name) : [];
 
         // パスパラメータをタグに追加
         foreach ($request->route()->parameters() as $key => $value) {
@@ -82,8 +82,8 @@ class CacheHeaderHelper
             return null;
         }
 
-        $routeName = $route->getName();
-        return Config::get('cache-headers.routes.' . $routeName);
+        $uri = $request->route()->uri();
+        return Config::get('cache-headers.routes.' . $uri);
     }
 
     /**
@@ -124,7 +124,7 @@ class CacheHeaderHelper
      * @param string $input
      * @return array
      */
-    private static function generateDotSeparatedArray(string $input) : array
+    private static function generateTagsByRouteName(string $input) : array
     {
         $segments = explode('.', $input);
         $result = [];
@@ -183,6 +183,8 @@ class CacheHeaderHelper
 
         $tag = (string)$tag;
 
+        // キャッシュタグはASCII文字のみである必要がある
+        // スペースは使用できない
         return preg_match('/^[\x21-\x7E]+$/', $tag) === 1;
     }
 }
