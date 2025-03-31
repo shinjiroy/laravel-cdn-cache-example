@@ -34,7 +34,7 @@ Route::withoutMiddleware([
             abort(500);
         } elseif ($q === '302') {
             // 適当なリダイレクトレスポンスを返す
-            return redirect('/search?q=redirected');
+            return redirect('/test?q=redirected');
         } elseif ($q === '400') {
             // 400を返す
             abort(400);

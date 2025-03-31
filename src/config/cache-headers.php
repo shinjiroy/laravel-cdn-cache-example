@@ -27,7 +27,7 @@ return [
         '/' => [ // ルートの場合は/のみであることに注意
             'cdn_max_age' => 86400,
         ],
-        'search' => [
+        'test' => [
             'query_params' => ['q'],
             'cdn_max_age' => 7200,
         ],
