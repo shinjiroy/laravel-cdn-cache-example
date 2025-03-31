@@ -13,7 +13,9 @@
         <div>hoge: {{ $hoge }}</div>
 
         <div>
+            <label for="id">id</label>
             <input id="id" type="text" name="id" value="{{ $id }}">
+            <label for="hoge">hoge</label>
             <input id="hoge" type="text" name="hoge" value="{{ $hoge }}">
             <button id="update" type="submit">更新</button>
         </div>

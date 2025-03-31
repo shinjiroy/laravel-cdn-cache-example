@@ -155,6 +155,12 @@ class CacheHeaderHelper
             return false;
         }
 
+        // Set-Cookieヘッダーがあればキャッシュしない
+        // Note: ただし、Set-Cookieがある場合、Laravelが自動的にキャッシュしないようにしてくれるのでチェックしなくても良いです
+        if ($response->headers->has('Set-Cookie')) {
+            return false;
+        }
+
         // Status Code
         if ($response->isSuccessful()) {
             return true;

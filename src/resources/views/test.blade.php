@@ -8,14 +8,16 @@
     </head>
 
     <body>
-        <div>検索ページです</div>
+        <div>テストページです</div>
         <div>q: {{ $q }}</div>
         <div>hoge: {{ $hoge }}</div>
 
-        <form action="{{ route('search') }}" method="get">
+        <form action="{{ route('test') }}" method="get">
+            <label for="q">q</label>
             <input type="text" name="q" value="{{ $q }}">
+            <label for="hoge">hoge</label>
             <input type="text" name="hoge" value="{{ $hoge }}">
-            <button type="submit">検索</button>
+            <button type="submit">Submit</button>
         </form>
     </body>
 </html>

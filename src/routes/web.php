@@ -18,7 +18,7 @@ Route::withoutMiddleware([
         return view('index');
     })->name('index');
 
-    Route::get('/search', function (Request $request) {
+    Route::get('/test', function (Request $request) {
         $q = $request->input('q');
         $hoge = $request->input('hoge'); // Cache-Tagには含まれない
 
@@ -40,8 +40,14 @@ Route::withoutMiddleware([
             abort(400);
         }
 
-        return view('search', compact('q', 'hoge'));
-    })->name('search');
+        // Set-Cookieヘッダーを返してみる
+        if ($q === 'set-cookie') {
+            return response()->view('test', compact('q', 'hoge'))
+                ->withCookie(cookie('testcookie', 'testcookie', 1000));
+        }
+
+        return view('test', compact('q', 'hoge'));
+    })->name('test');
 
     Route::get('/content/{id}', function (Request $request, $id) {
         $hoge = $request->input('hoge'); // Cache-Tagには含まれない
